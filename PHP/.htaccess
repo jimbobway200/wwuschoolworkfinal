@@ -1,0 +1,4 @@
+AuthUserFile /usr/home/collinj8/public_html/cgi-bin/.htpasswd
+AuthName "Protecting my cgi-bin directory"
+AuthType Basic
+Require valid-user

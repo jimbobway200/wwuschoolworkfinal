@@ -1,0 +1,58 @@
+<?php
+//WNumber, password, status, LastName, FirstName, Phone, Email, Track
+//NameProject, StudentName(optional), CompanyName, SupervisorName, URLProject(Optional), CompletionDate, Image(optional)
+/*** mysql hostname ***/
+$hostname = 'db.cs.wwu.edu';
+/*** mysql username ***/
+$username = 'collinj8';
+/*** mysql password ***/
+$password = '4XU7B96Eg';
+/*** mysql database name ***/
+$dbname = 'collinj8';
+/*** connect to the database ***/
+$link = @new mysqli($hostname, $username, $password, $dbname);
+
+$ProjectName = $_POST["ProjectName"];
+$FirstName = $_POST["FirstName"];
+$LastName = $_POST["LastName"];
+$CompanyName = $_POST["CompanyName"];
+$SupervisorName = $_POST["SupervisorName"];
+$CompletionDate = $_POST["CompletionDate"];
+
+
+
+/*** check if the link is a valid resource ***/
+if(!mysqli_connect_errno())
+{
+  // //Show Current Projects and Students Working
+  // $sql = "SELECT * FROM Projects";
+  // $result = $link->query($sql);
+  // if ($result-> num_rows > 0) {
+  //   echo "Project has been created. Thank you!";
+  // } else {
+  //   echo "Sorry, but that student name isn't in the database. Check your spelling";
+  // }
+
+  $sql2 = "SELECT * FROM Users WHERE FirstName = '$FirstName' AND LastName = '$LastName'";
+  $result2 = $link->query($sql2);
+  if (($result2-> num_rows > 0) || ($Firstname == Null)){ //aka we found the student in the database
+    $sql3 = "INSERT INTO Projects (Project, FirstName, LastName, Company, Supervisor, CompletionDate, ImageURL)
+    VALUES ('$ProjectName', '$FirstName', '$LastName', '$CompanyName', '$SupervisorName', '$CompletionDate', '$ImageURL')";
+    if ($link->query($sql3) === TRUE) {
+      echo "Project has been created. Thank you!";
+    } else {
+      echo "Error Creating Project: " . $link->error;
+    }
+  } else {
+    echo "Sorry, but that student name isn't in the database. Check your spelling";
+  }
+
+  /*** close the connection ***/
+  $link->close();
+}
+else
+{
+  /*** if we fail to connect ***/
+  echo 'Unable to connect';
+}
+?>
